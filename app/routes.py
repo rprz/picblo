@@ -80,3 +80,9 @@ def vote(picture_id, vote_value):
         picture.votes += vote_value
         db.session.commit()
     return redirect(url_for('index'))
+
+@app.route('/users')
+# @login_required
+def user_list():
+    users = User.query.all()
+    return render_template('user_list.html', users=users)
