@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('register') }}">
+        {{ form.hidden_tag() }}
+        <div>
+            <label for="{{ form.username.id }}">Username</label>
+            {{ form.username(placeholder='Enter your username') }}
+            {% for error in form.username.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            <label for="{{ form.password.id }}">Password</label>
+            {{ form.password(placeholder='Enter your password') }}
+            {% for error in form.password.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            <label for="{{ form.password2.id }}">Repeat Password</label>
+            {{ form.password2(placeholder='Repeat your password') }}
+            {% for error in form.password2.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <button type="submit">{{ form.submit.label }}</button>
+    </form>
+{% endblock %}
