@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from app import app, db
 from app.models import User, Picture
 from app.forms import LoginForm, RegistrationForm, UploadForm
+import logging
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -66,15 +67,24 @@ def register():
 def upload():
     form = UploadForm()
     if form.validate_on_submit():
-        if form.image.data and allowed_file(form.image.data.filename):
-            filename = secure_filename(form.image.data.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            form.image.data.save(filepath)
-            picture = Picture(image=filepath, user=current_user)
-            db.session.add(picture)
+        if form.picture.data and allowed_file(form.picture.data.filename):
+            uploaded_picture = form.picture.data
+            caption = form.caption.data
+
+            # Replace this with the desired upload folder path on your server
+            UPLOAD_FOLDER = 'app/static/uploads'
+
+            # Make sure the filename is secure
+            filename = secure_filename(uploaded_picture.filename)
+
+            # Save the uploaded file to the upload folder
+            picture_path = os.path.join(UPLOAD_FOLDER, filename)
+            uploaded_picture.save(picture_path)
+
+            # Save the picture information in the database
+            new_picture = Picture(filename=filename, caption=caption, user_id=current_user.id)
+            db.session.add(new_picture)
             db.session.commit()
-            flash('Image uploaded successfully.')
-            return redirect(url_for('index'))
         else:
             flash('Allowed image types are: png, jpg, jpeg, gif')
     return render_template('upload.html', title='Upload', form=form)

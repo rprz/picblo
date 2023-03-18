@@ -21,7 +21,9 @@ def load_user(user_id):
 
 class Picture(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image = db.Column(db.String(256), nullable=False)
+    filename = db.Column(db.String(256), nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    caption = db.Column(db.String(200), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     votes = db.Column(db.Integer, default=0)
+    

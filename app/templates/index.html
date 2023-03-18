@@ -11,7 +11,7 @@
     <div class="gallery">
         {% for picture in pictures %}
             <div class="picture">
-                <img src="{{ url_for('static', filename='img/' + picture.image) }}" alt="Picture uploaded by {{ picture.user.username }}" />
+                <img src="{{ url_for('static', filename='uploads/' + picture.filename) }}" alt="Picture uploaded by {{ picture.user.username }}" />
                 <div class="votes">
                     <a href="{{ url_for('vote', picture_id=picture.id, vote_value=1) }}">Vote Up</a>
                     <span>{{ picture.votes }}</span>
