@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Upload a Picture</h1>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload') }}">
+        {{ form.hidden_tag() }}
+        <div>
+            <label for="{{ form.picture.id }}">Picture</label>
+            {{ form.picture() }}
+            {% for error in form.picture.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div>
+            <label for="{{ form.caption.id }}">Caption</label>
+            {{ form.caption(placeholder='Enter a caption') }}
+            {% for error in form.caption.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <button type="submit">{{ form.submit.label }}</button>
+    </form>
+{% endblock %}
