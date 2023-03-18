@@ -4,3 +4,4 @@ flask-migrate
 flask-login
 pillow
 werkzeug
+Flask-WTF
